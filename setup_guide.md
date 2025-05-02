@@ -65,11 +65,11 @@ Instructions on sharing an internet connection is very operating system specific
 
 1. Enable IP Forwarding by running the command `sysctl -w net.ipv4.ip_forward=1`
 2. Create "dummy" virtual network interface `sudo ip link set name dummy_interface dev dummy0`. Replace all instances of **dummy_interface** with the name of the new adapter. (keep it simple you will have to reference this later)
-4. Figure out what network interface is used for connecting to the internet. `route | grep '^default' | grep -o '[^ ]*$'` Replace all instances of **real_interface** with the output of this command
-5. Forward traffic from **dummy_interface** to **real_interface**. `sudo iptables -A FORWARD -i dummy_interface -o real_interface -j ACCEPT`
-6. Forward traffic from **real_interface** to **dummy_interface**
+3. Figure out what network interface is used for connecting to the internet. `route | grep '^default' | grep -o '[^ ]*$'` Replace all instances of **real_interface** with the output of this command
+4. Forward traffic from **dummy_interface** to **real_interface**. `sudo iptables -A FORWARD -i dummy_interface -o real_interface -j ACCEPT`
+5. Forward traffic from **real_interface** to **dummy_interface**
 `sudo iptables -A FORWARD -i real_interface -o dummy_interface -j ACCEPT`
-7. Enable network sharing on your **real_interface**. `sudo iptables -t nat -A POSTROUTING -o real_interface -j MASQUERADE`
+6. Enable network sharing on your **real_interface**. `sudo iptables -t nat -A POSTROUTING -o real_interface -j MASQUERADE`
 
 Congratulations! That Mindstorm now was access to the same network as your computer.
 
@@ -82,17 +82,16 @@ Follow this [tutorial](https://www.ev3dev.org/docs/tutorials/connecting-to-the-i
                                                         e
 Once you have SSHed to the mindstorm run the following commands
 
-```
+``` bash
 sudo systemctl unmask openrobertalab
 sudo systemctl start openrobertalab
 ```
 
-       e                                                 
 This will enable a service that allows you to control the mindstorms via [roberta labs](http://lab.open-roberta.org/)
 
 After running the commands above, it will start automatically after a reboot. You can turn it back off by running:
 
-```
+``` bash
 sudo systemctl stop openrobertalab.service
 sudo systemctl mask openrobertalab.service
 ```
