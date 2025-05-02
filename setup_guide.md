@@ -79,7 +79,6 @@ Follow this [tutorial](https://www.ev3dev.org/docs/tutorials/connecting-to-the-i
 
 ### Setup Block coding
 
-                                                        e
 Once you have SSHed to the mindstorm run the following commands
 
 ``` bash
